@@ -1,9 +1,10 @@
+using keyvaultaccesstest_hemant.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace keyvaultaccesstest_hemant.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("[controller]/[action]")]
 	public class WeatherForecastController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
@@ -12,22 +13,27 @@ namespace keyvaultaccesstest_hemant.Controllers
 		};
 
 		private readonly ILogger<WeatherForecastController> _logger;
+		private readonly IKVManager _kVManager;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger)
+		public WeatherForecastController(ILogger<WeatherForecastController> logger, IKVManager kVManager)
 		{
 			_logger = logger;
+			_kVManager = kVManager;
 		}
 
 		[HttpGet(Name = "GetWeatherForecast")]
-		public IEnumerable<WeatherForecast> Get()
+		public string Get()
 		{
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-			{
-				Date = DateTime.Now.AddDays(index),
-				TemperatureC = Random.Shared.Next(-20, 55),
-				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-			})
-			.ToArray();
+			var str = _kVManager.GetSecret("test");
+			return str;
+		}
+
+		[HttpGet(Name = "GetSecreteFromEnvVariable")]
+		public string GetSecreteFromEnvVariable()
+		{
+			var str = Environment.GetEnvironmentVariable("TESTENV");
+			str = str ?? "No value found";
+			return str;
 		}
 	}
 }

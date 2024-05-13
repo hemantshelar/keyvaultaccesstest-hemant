@@ -1,3 +1,5 @@
+using keyvaultaccesstest_hemant.Services;
+
 namespace keyvaultaccesstest_hemant
 {
 	public class Program
@@ -12,6 +14,7 @@ namespace keyvaultaccesstest_hemant
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+			builder.Services.AddSingleton<IKVManager, KVManager>();
 
 			var app = builder.Build();
 

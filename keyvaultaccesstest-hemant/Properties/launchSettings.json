@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7241;http://localhost:5141",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "TESTENV": "@Microsoft.KeyVault(SecretUri=https://scripttestkvhf.vault.azure.net/secrets/envsecret/d428e61371ab48f0be6dda925d83d71c/)"
       }
     },
     "IIS Express": {
